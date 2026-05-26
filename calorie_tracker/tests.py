@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from .forms import FoodItemForm
 from .models import FoodItem
+from .services import calculate_total_calories
 
 
 class FoodItemModelTests(TestCase):
@@ -22,6 +23,16 @@ class FoodItemFormTests(TestCase):
         form = FoodItemForm(data={'name': '', 'calories': 220})
 
         self.assertFalse(form.is_valid())
+
+
+class CalorieServiceTests(TestCase):
+    def test_calculates_total_calories(self):
+        items = [
+            FoodItem(name='Milk', calories=150),
+            FoodItem(name='Bread', calories=90),
+        ]
+
+        self.assertEqual(calculate_total_calories(items), 240)
 
 
 class DashboardViewTests(TestCase):
