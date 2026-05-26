@@ -1,18 +1,13 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
 
 from .forms import FoodItemForm
 from .models import FoodItem
-
-
-def get_today_items():
-    today = timezone.localdate()
-    return FoodItem.objects.filter(created_at__date=today)
+from .services import calculate_total_calories, get_today_items
 
 
 def dashboard(request):
     items = get_today_items()
-    total_calories = sum(item.calories for item in items)
+    total_calories = calculate_total_calories(items)
     form = FoodItemForm(request.POST or None)
 
     if request.method == 'POST':
