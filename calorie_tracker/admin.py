@@ -7,4 +7,5 @@ from .models import FoodItem
 class FoodItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'calories', 'created_at')
     list_filter = ('created_at',)
+    ordering = ('-created_at',)
     search_fields = ('name',)
