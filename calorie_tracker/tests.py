@@ -50,3 +50,11 @@ class DashboardViewTests(TestCase):
 
         self.assertRedirects(response, reverse('tracker:dashboard'))
         self.assertEqual(FoodItem.objects.count(), 0)
+
+    def test_remove_food_item_deletes_entry(self):
+        item = FoodItem.objects.create(name='Toast', calories=120)
+
+        response = self.client.post(reverse('tracker:remove_food_item', args=[item.id]))
+
+        self.assertRedirects(response, reverse('tracker:dashboard'))
+        self.assertFalse(FoodItem.objects.filter(id=item.id).exists())
