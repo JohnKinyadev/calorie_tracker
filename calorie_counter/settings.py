@@ -34,7 +34,15 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1 localhost').split()
+allowed_hosts = os.environ.get(
+    'DJANGO_ALLOWED_HOSTS',
+    '127.0.0.1 localhost calorie-tracker-fyta.onrender.com',
+)
+ALLOWED_HOSTS = allowed_hosts.replace(',', ' ').split()
+
+render_external_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_external_hostname:
+    ALLOWED_HOSTS.append(render_external_hostname)
 
 
 # Application definition
