@@ -11,3 +11,8 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+
+## Environment
+
+Copy `.env.example` to `.env` and update the values for your machine or hosting provider.
+The app uses SQLite by default, and `DATABASE_URL` can point to PostgreSQL in production.
