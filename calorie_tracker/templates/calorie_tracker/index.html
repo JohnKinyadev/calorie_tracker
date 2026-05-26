@@ -1,0 +1,75 @@
+{% extends 'calorie_tracker/base.html' %}
+
+{% block title %}Calorie Counter Dashboard{% endblock %}
+
+{% block content %}
+<div class="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+  <section class="space-y-6 rounded-3xl bg-white p-6 shadow-lg shadow-slate-200/80">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="text-xl font-semibold text-slate-900">Add a food item</h2>
+        <p class="text-sm text-slate-500">Track calories for the current day.</p>
+      </div>
+    </div>
+
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          {{ form.name.label_tag }}
+          {{ form.name }}
+          {% if form.name.errors %}
+          <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+          {% endif %}
+        </div>
+        <div>
+          {{ form.calories.label_tag }}
+          {{ form.calories }}
+          {% if form.calories.errors %}
+          <p class="mt-1 text-sm text-red-600">{{ form.calories.errors.0 }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button type="submit" name="action" value="add" class="inline-flex items-center justify-center rounded-2xl bg-indigo-600 px-5 py-3 text-white shadow hover:bg-indigo-700">
+          Add item
+        </button>
+        <button type="submit" name="action" value="reset" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 text-slate-700 shadow-sm hover:bg-slate-50">
+          Reset today
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="space-y-4 rounded-3xl bg-white p-6 shadow-lg shadow-slate-200/80">
+    <div>
+      <h2 class="text-xl font-semibold text-slate-900">Today's food items</h2>
+      <p class="mt-1 text-sm text-slate-500">Remove any entry or reset the entire list.</p>
+    </div>
+
+    {% if items %}
+    <div class="space-y-4">
+      {% for item in items %}
+      <div class="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-lg font-semibold text-slate-900">{{ item.name }}</p>
+          <p class="text-sm text-slate-600">{{ item.calories }} kcal</p>
+        </div>
+        <form method="post" action="{% url 'tracker:remove_food_item' item.id %}">
+          {% csrf_token %}
+          <button type="submit" class="rounded-2xl bg-rose-500 px-4 py-2 text-white hover:bg-rose-600">
+            Remove
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-slate-500">
+      No food items added yet. Start by adding one above.
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
