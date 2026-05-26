@@ -26,3 +26,7 @@ Open the dashboard, add each food item with its calorie count, and use the remov
 ```powershell
 python manage.py test
 ```
+
+## Deployment
+
+Set `DJANGO_DEBUG=False`, provide a strong `DJANGO_SECRET_KEY`, configure `DJANGO_ALLOWED_HOSTS`, and point `DATABASE_URL` at the production database before deploying.
