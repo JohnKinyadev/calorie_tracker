@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'calorie_tracker',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
