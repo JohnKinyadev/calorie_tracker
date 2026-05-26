@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 
 from .forms import FoodItemForm
 from .models import FoodItem
@@ -21,3 +22,23 @@ class FoodItemFormTests(TestCase):
         form = FoodItemForm(data={'name': '', 'calories': 220})
 
         self.assertFalse(form.is_valid())
+
+
+class DashboardViewTests(TestCase):
+    def test_dashboard_renders_total_calories(self):
+        FoodItem.objects.create(name='Oats', calories=180)
+        FoodItem.objects.create(name='Eggs', calories=140)
+
+        response = self.client.get(reverse('tracker:dashboard'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '320 kcal')
+
+    def test_dashboard_adds_food_item(self):
+        response = self.client.post(
+            reverse('tracker:dashboard'),
+            {'action': 'add', 'name': 'Beans', 'calories': 300},
+        )
+
+        self.assertRedirects(response, reverse('tracker:dashboard'))
+        self.assertTrue(FoodItem.objects.filter(name='Beans').exists())
