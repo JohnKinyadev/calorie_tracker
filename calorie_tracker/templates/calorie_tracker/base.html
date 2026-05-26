@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Calorie Counter{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+      <header class="mb-8 rounded-3xl bg-white/90 p-6 shadow-lg shadow-slate-200/80 backdrop-blur">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm uppercase tracking-[0.3em] text-indigo-600">Calorie Tracker</p>
+            <h1 class="mt-2 text-3xl font-semibold text-slate-900 sm:text-4xl">Daily food log</h1>
+            <p class="mt-2 max-w-2xl text-slate-600">Add foods, view today's calories, remove items, and reset the day.</p>
+          </div>
+          <div class="rounded-3xl bg-indigo-600 px-5 py-4 text-white shadow-xl shadow-indigo-300/30">
+            <p class="text-sm uppercase tracking-[0.3em] text-slate-200">Today</p>
+            <p class="mt-2 text-3xl font-semibold">{{ total_calories|default:'0' }} kcal</p>
+          </div>
+        </div>
+      </header>
+
+      <main>{% block content %}{% endblock %}</main>
+    </div>
+  </body>
+</html>
