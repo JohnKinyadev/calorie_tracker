@@ -29,5 +29,8 @@ python manage.py test
 
 ## Deployment
 
+The project pins Python with `.python-version` because Django 4.2 supports Python up to 3.12.
+On Render, make sure the service root directory points at this Django project folder so Render can read `.python-version` before building.
+
 Set `DJANGO_DEBUG=False`, provide a strong `DJANGO_SECRET_KEY`, configure `DJANGO_ALLOWED_HOSTS`, and point `DATABASE_URL` at the production database before deploying.
 Keep Cloudinary credentials in environment variables: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`.
